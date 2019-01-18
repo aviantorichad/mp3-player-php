@@ -70,6 +70,7 @@ $(document).ready(function(){
 
 	$('#playlist a').on('click', function() {
 		urutan = $(this).parent().prevAll().length;
+		tandaiTerpilih(urutan);
 		playAudio(urutan);
 		});
 
@@ -89,6 +90,13 @@ $(document).ready(function(){
 			$('#audio-player').trigger('load');
 			$('#audio-player').trigger('play');
 		}
+
+function tandaiTerpilih(urutan){
+$('#playlist li').css('background-color','#222');
+$('#playlist li').filter(function(index){
+return index === urutan;
+}).css('background-color','#037');
+}
 
 $("#cariLagu").on("keyup", function() {
 	var value = $(this).val().toLowerCase();
