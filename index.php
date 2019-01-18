@@ -10,7 +10,13 @@
             #playlist {list-style: none;margin: 0;padding: 0;}
             #playlist li {padding: 0px;border-bottom: 1px solid #999;}
             #playlist li a {padding: 10px; text-decoration: none;color: #999;display:block;}
-            #playlist li a:hover {background: #555;color: #fff;}
+	    #playlist li a:hover {background: #555;color: #fff;}
+	    #cariLagu {width: 100%;
+    background: #222;
+    border: 0;
+    border-bottom: 1px solid #555;
+    padding: 10px;
+    color: #fff;}
         </style>
     </head>
     <body>
@@ -20,7 +26,7 @@
         <source id="audio-source">
             Browser anda tidak mendukung, silakan gunakan browser versi jaman now
     </audio>
-
+	<input id="cariLagu" type="text" placeholder="Search..">
         <?php
             $dir = "playlists/";
             if(is_dir($dir)){
@@ -64,7 +70,14 @@
                     $('#audio-source').prop('src', mainkan);
                     $('#audio-player').trigger('load');
                     $('#audio-player').trigger('play');
-                }
+		}
+
+$("#cariLagu").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#playlist li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
             });
         </script>
     </body>
