@@ -5,8 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             body {background: #222;color: #fff;font-family: arial;}
-            #sedang-main {padding:10px;font-size: 24px;font-weight: bold;color: gold;}
-            #audio-player {width:100%;margin: 20px auto;}
+	    #sedang-main {
+	    padding: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #222222;
+    background: #f1f3f4;
+    margin-bottom: -24px;
+	    }
+            #audio-player {width:100%;margin: 20px auto;border-radius: 0;
+    background: #f1f3f4;}
             #playlist {list-style: none;margin: 0;padding: 0;}
             #playlist li {padding: 0px;border-bottom: 1px solid #999;}
             #playlist li a {padding: 10px; text-decoration: none;color: #999;display:block;}
