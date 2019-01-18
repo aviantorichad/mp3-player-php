@@ -3,6 +3,7 @@
     <head>
         <title>Spotify Abal-abal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="x-icon" href="favicon.ico" />
         <style>
             #cariLagu,body{background:#222;color:#fff}body{font-family:arial}#sedang-main{padding:10px;font-size:24px;font-weight:700;color:#222;background:#f1f3f4;margin-bottom:-24px}#audio-player{width:100%;margin:20px auto;border-radius:0;background:#f1f3f4}#playlist{list-style:none;margin:0 0 175px;padding:0}#playlist li{padding:0;border-bottom:1px solid #999}#playlist li a{padding:10px;text-decoration:none;color:#999;display:block}#playlist li a:hover{background:#555;color:#fff}#cariLagu{width:100%;border:0;border-bottom:1px solid #555;padding:10px}#container-player{position:fixed;width:100%;bottom:-20px;left:0;margin:0}
         </style>
