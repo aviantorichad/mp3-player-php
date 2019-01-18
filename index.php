@@ -40,7 +40,7 @@
         <script src="jquery-3.3.1.min.js"></script>
         <script>
             $(document).ready(function(){
-                var folder = "playlist/";
+                var folder = "playlists/";
                 var urutan = 0;
                 var file, mainkan = "";
 
