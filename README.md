@@ -1,7 +1,7 @@
 # mp3-player-php
 
 ## DEMO
-```http://ms.aviantorichad.com:9090```
+```http://dev.aviantorichad.com:9090```
 
 ## INSTALLATION
 + clone or download this repo
