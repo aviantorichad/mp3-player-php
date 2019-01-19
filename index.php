@@ -33,6 +33,7 @@
                 left: 0;
                 margin: 0;
             }
+            .duration{float:right;margin-top: 10px;color: #ddd;margin-right:10px;}
         </style>
     </head>
     <body>
@@ -46,13 +47,18 @@
         </div>
 
         <?php
+        // ref: http://www.zedwood.com/article/php-calculate-duration-of-mp3
+        require_once "mp3file.class.php";
+
         $dir = "playlists/";
         if (is_dir($dir)) {
             if ($buka = opendir($dir)) {
                 echo '<ul id="playlist">';
                 while (($file = readdir($buka)) !== false) {
+                    $mp3file = new MP3File('./'.$dir.$file);
+                    $duration = $mp3file->getDuration(); //(slower) for VBR (or CBR)
                     if (strpos($file, '.mp3')) {
-                        echo '<li><a href="javascript:void(0)">' . $file . '</a></li>';
+                        echo '<li><small class="duration">' . MP3File::formatTime($duration) . '</small><a href="javascript:void(0)">' . $file . '</a></li>';
                     }
                 }
                 echo '</ul>';
