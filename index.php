@@ -35,7 +35,7 @@
             }
             .duration{float:right;margin-top: 10px;color: #ddd;margin-right:10px;}
             #visualizer {
-                position: absolute;
+                position: fixed;
                 left: 0;
                 bottom: 0;
                 width: 100%;
@@ -171,7 +171,7 @@
               }
 
               function tandaiTerpilih(urutan) {
-                $('#playlist li').css('background-color', '#222');
+                $('#playlist li').css('background-color', 'transparent');
                 $('#playlist li').filter(function (index) {
                   return index === urutan;
                 }).css('background-color', '#037');
