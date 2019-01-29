@@ -34,9 +34,19 @@
                 margin: 0;
             }
             .duration{float:right;margin-top: 10px;color: #ddd;margin-right:10px;}
+            #visualizer {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+
         </style>
     </head>
     <body>
+        <canvas id="visualizer"></canvas>
         <div id="container-player">
             <input id="cariLagu" type="text" placeholder="Search..">
             <marquee behavior="alternate" id="sedang-main">Judul Lagu</marquee>
@@ -45,6 +55,7 @@
                 Browser anda tidak mendukung, silakan gunakan browser versi jaman now
             </audio>
         </div>
+
 
         <?php
         // ref: http://www.zedwood.com/article/php-calculate-duration-of-mp3
@@ -68,49 +79,110 @@
         }
         ?>
 
+
         <script src="jquery-3.3.1.min.js"></script>
         <script>
             $(document).ready(function () {
-                var folder = "playlists/";
-                var urutan = 0;
-                var file, mainkan = "";
+              $('#visualizer').css('bottom', eval($('#container-player').height() - 15) + "px");
 
-                $('#playlist a').on('click', function () {
-                    urutan = $(this).parent().prevAll().length;
-                    playAudio(urutan);
-                });
+              var folder = "playlists/";
+              var urutan = 0;
+              var file, mainkan = "";
 
-                $('#audio-player').on('ended', function () {
-                    urutan++;
-                    if (urutan == $('#playlist a').length) {
-                        urutan = 0;
-                    }
-                    playAudio(urutan);
-                });
+              $('#playlist a').on('click', function () {
+                urutan = $(this).parent().prevAll().length;
+                playAudio(urutan);
+              });
 
-                function playAudio(urutan) {
-                    tandaiTerpilih(urutan);
-                    file = $('#playlist a:eq(' + urutan + ')').text();
-                    mainkan = folder + file;
-                    $('#sedang-main').html(file);
-                    $('#audio-source').prop('src', mainkan);
-                    $('#audio-player').trigger('load');
-                    $('#audio-player').trigger('play');
+              $('#audio-player').on('ended', function () {
+                urutan++;
+                if (urutan == $('#playlist a').length) {
+                  urutan = 0;
                 }
+                playAudio(urutan);
+              });
 
-                function tandaiTerpilih(urutan) {
-                    $('#playlist li').css('background-color', '#222');
-                    $('#playlist li').filter(function (index) {
-                        return index === urutan;
-                    }).css('background-color', '#037');
+              function makeVisualizer() {
+                var audio = document.getElementById("audio-player");
+//                var audio = document.createElement(audio);
+                //ref: https://codepen.io/nfj525/pen/rVBaab
+                var context = new AudioContext();
+                var src = context.createMediaElementSource(audio);
+                var analyser = context.createAnalyser();
+
+                var canvas = document.getElementById("visualizer");
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                var ctx = canvas.getContext("2d");
+
+                src.connect(analyser);
+                analyser.connect(context.destination);
+
+                analyser.fftSize = 256;
+
+                var bufferLength = analyser.frequencyBinCount;
+                console.log(bufferLength);
+
+                var dataArray = new Uint8Array(bufferLength);
+
+                var WIDTH = canvas.width;
+                var HEIGHT = canvas.height;
+
+                var barWidth = (WIDTH / bufferLength) * 2.5;
+                var barHeight;
+                var x = 0;
+
+                function renderFrame() {
+                  requestAnimationFrame(renderFrame);
+
+                  x = 0;
+
+                  analyser.getByteFrequencyData(dataArray);
+
+                  ctx.fillStyle = "#000";
+                  ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+                  for (var i = 0; i < bufferLength; i++) {
+                    barHeight = dataArray[i];
+
+                    var r = barHeight + (25 * (i / bufferLength));
+                    var g = 250 * (i / bufferLength);
+                    var b = 50;
+
+                    ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+                    ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+
+                    x += barWidth + 1;
+                  }
                 }
+                renderFrame();
+              }
 
-                $("#cariLagu").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#playlist li").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
+              function playAudio(urutan) {
+                tandaiTerpilih(urutan);
+                file = $('#playlist a:eq(' + urutan + ')').text();
+                mainkan = folder + file;
+                $('#sedang-main').html(file);
+                $('#audio-source').prop('src', mainkan);
+                $('#audio-player').trigger('load');
+                $('#audio-player').trigger('play');
+
+                makeVisualizer();
+              }
+
+              function tandaiTerpilih(urutan) {
+                $('#playlist li').css('background-color', '#222');
+                $('#playlist li').filter(function (index) {
+                  return index === urutan;
+                }).css('background-color', '#037');
+              }
+
+              $("#cariLagu").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#playlist li").filter(function () {
+                  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
+              });
             });
         </script>
     </body>
