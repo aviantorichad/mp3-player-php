@@ -16,7 +16,7 @@
             }
             #audio-player {width:100%;margin: 20px auto;border-radius: 0;
                            background: #f1f3f4;}
-            #playlist {list-style: none;margin: 0;padding: 0;margin-bottom:175px;}
+            #playlist {list-style: none;margin: 0;padding: 0;}
             #playlist li {padding: 0px;border-bottom: 1px solid #999;}
             #playlist li a {padding: 10px; text-decoration: none;color: #999;display:block;}
             #playlist li a:hover {background: #555;color: #fff;}
@@ -41,6 +41,7 @@
                 width: 100%;
                 height: 100%;
                 z-index: -1;
+                opacity: .5;
             }
 
         </style>
@@ -83,6 +84,7 @@
         <script src="jquery-3.3.1.min.js"></script>
         <script>
             $(document).ready(function () {
+              $('#playlist').css('margin-bottom', eval($('#container-player').height() - 15) + "px");
               $('#visualizer').css('bottom', eval($('#container-player').height() - 15) + "px");
 
               var folder = "playlists/";
