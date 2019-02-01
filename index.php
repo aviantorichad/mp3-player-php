@@ -87,7 +87,7 @@
               $('#playlist').css('margin-bottom', eval($('#container-player').height() - 15) + "px");
               $('#visualizer').css('bottom', eval($('#container-player').height() - 15) + "px");
 
-              var folder = "playlists/";
+              var folder = "<?= $dir ?>";
               var urutan = 0;
               var file, mainkan = "";
 
