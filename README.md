@@ -2,7 +2,7 @@
 ![screenshot](https://github.com/aviantorichad/mp3-player-php/blob/master/ss.png)
 
 ## DEMO
-```http://dev.aviantorichad.com/projects/mp3-player-php```
+[a http://dev.aviantorichad.com/projects/mp3-player-php](http://dev.aviantorichad.com/projects/mp3-player-php)
 
 ## INSTALLATION
 + clone or download this repo
